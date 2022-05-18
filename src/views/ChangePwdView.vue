@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
     <div class="card">
-      <div>
+      <div style="position: fixed">
         <!-- header icon? -->
         <button class="simplebtn" @click="gohome">
           <svg
@@ -50,6 +50,7 @@
                 target="_blank"
                 >GCAuth</a
               >
+              <label for="" style="color: green">{{ msg }}</label>
             </p>
             <button class="actionbtn" @click="submit">密码更改</button>
 
@@ -71,7 +72,11 @@ export default {
       password: "",
       pwdverify: "",
       oldpwd: "",
+      msg: "",
     };
+  },
+  mounted() {
+    this.msg = "";
   },
   methods: {
     submit() {
@@ -90,7 +95,8 @@ export default {
           if (!res.data.success) {
             alert(res.data.message);
           } else {
-            router.push("/");
+            this.msg = "更改密码成功，正在重定向到登录页面！";
+            setTimeout(router.push("/"), "1000");
           }
         })
         .catch(() => {
@@ -103,81 +109,3 @@ export default {
   },
 };
 </script>
-<style>
-.bg {
-  background: rgb(153, 153, 153);
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card {
-  background: white;
-  width: 600px;
-  /* height: 800px; */
-  border-radius: 15px;
-}
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-}
-html {
-  height: 100vh;
-  width: 100vw;
-}
-.form {
-  padding: 30px 40px;
-}
-.simplebtn {
-  margin: 10px;
-  padding: 0px;
-  height: 32px;
-  width: 32px;
-  background: transparent;
-  border: none;
-}
-
-input {
-  margin: 30px 0 0px 0;
-  font-size: 20px;
-}
-
-input::-webkit-input-placeholder {
-  padding: 20px;
-}
-.row1 > input[type="text"] {
-  height: 50px;
-  width: 100%;
-  border: solid 1px;
-  border-color: lightgray;
-  border-radius: 4px;
-}
-.row1 > input[type="password"] {
-  height: 50px;
-  width: 100%;
-  border: solid 1px;
-  border-color: lightgray;
-  border-radius: 4px;
-}
-input:focus {
-  outline-color: rgb(29, 155, 240);
-}
-
-.actionbtn {
-  background: black;
-  color: white;
-  height: 50px;
-  width: 100%;
-  font-size: 20px;
-  border-radius: 30px;
-}
-.title {
-  font-size: 30px;
-  font-weight: bold;
-}
-fieldset {
-  border: none;
-}
-</style>

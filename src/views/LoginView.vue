@@ -70,7 +70,7 @@
               <!-- <input type="checkbox" name="remember_me" id="remember" value="1" />
               <label for="remember">Remember me</label> -->
 
-              <router-link to="/changepwd" class="alternate-context" target="_blank"
+              <router-link to="/changepwd" class="alternate-context" 
                 >Change password?</router-link
               >
             </p>
@@ -106,8 +106,8 @@
         <div>
           <p>
             <small
-              >Learn more about third-party app permissions in the
-              <a href="/" target="_blank">Help Center</a>.</small
+              >Source code at:
+              <a href="https://github.com/SwetyCore/GCAuth-OAuth-TwitterTheme" target="_blank">GCAuth-OAuth-TwitterTheme</a>.</small
             >
           </p>
         </div>
