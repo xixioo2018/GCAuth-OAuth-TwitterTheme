@@ -42,15 +42,7 @@
 
           <fieldset class="buttons">
             <p>
-              <label for="remember">Based on </label>
-
-              <a
-                href="https://github.com/exzork/GCAuth"
-                class="alternate-context"
-                target="_blank"
-                >GCAuth</a
-              >
-              <label for="" style="color: green">{{ msg }}</label>
+              <label for="" style="color: red">{{ msg }}</label>
             </p>
             <button class="actionbtn" @click="submit">密码更改</button>
 
@@ -65,6 +57,7 @@
 
 <script>
 import router from "@/router";
+import Message from "@/i18n";
 export default {
   data() {
     return {
@@ -93,14 +86,16 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (!res.data.success) {
-            alert(res.data.message);
+            this.msg = Message[res.data.message]
+            // alert(res.data.message);
           } else {
             this.msg = "更改密码成功，正在重定向到登录页面！";
             setTimeout(router.push("/"), "1000");
           }
         })
         .catch(() => {
-          alert("更改失败");
+          this.msg = "更改失败"
+          // alert("更改失败");
         });
     },
     gohome() {

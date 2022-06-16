@@ -1,14 +1,25 @@
 <template>
   <div class="bg">
     <div class="card">
-      <div style="position:fixed;">
-        <!-- header icon? -->
+      
+      <!-- <div id="header" role="banner">
+        <div class="bar">
+          <h1 class="logo">
+            <a class="alternate-context" href="/">Twitter</a>
+          </h1>
+
+          <div id="not-logged-in">
+            <router-link to="regeister">Sign up for GrassCutter</router-link>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div style="position:fixed;">
         <button class="simplebtn" @click="gohome">
           <svg
             viewBox="0 0 24 24"
             aria-hidden="true"
-            class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"
-          >
+            class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03">
             <g>
               <path
                 d="M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z"
@@ -16,32 +27,33 @@
             </g>
           </svg>
         </button>
-      </div>
+      </div> -->
+
       <div class="form">
         <div>
           <fieldset class="sign-in">
-            <span class="title">注册</span>
+            <span class="title">登录</span>
             <div class="row1 user">
               <input v-model="username" type="text" placeholder="账号" value="" />
             </div>
             <div class="row1 password">
               <input v-model="password" type="password" placeholder="密码" value="" />
             </div>
-            <div class="row1 password">
-              <input
-                v-model="pwdverify"
-                type="password"
-                placeholder="再次确认"
-                value=""
-              />
-            </div>
           </fieldset>
-
+          
           <fieldset class="buttons">
             <p>
               <label for="" style="color:red;">{{msg}}</label>
             </p>
-            <button class="actionbtn" @click="submit">注册</button>
+            <button class="actionbtn" @click="submit">登录</button>
+          </fieldset>
+          <fieldset style="display: flex; justify-content: space-between;">
+            <p>
+              <router-link to="/changepwd" class="alternate-context">修改密码</router-link>
+            </p>
+            <p>
+              <router-link to="/register" class="alternate-context" >注册</router-link>
+            </p>
           </fieldset>
         </div>
       </div>
@@ -68,11 +80,10 @@ export default {
     submit() {
       this.$axios({
         method: "post",
-        url: "/authentication/register",
+        url: "/authentication/login",
         data: {
           username: this.username,
           password: this.password,
-          password_confirmation: this.pwdverify,
         },
       })
         .then((res) => {
@@ -80,15 +91,13 @@ export default {
           if (!res.data.success) {
             this.msg = Message[res.data.message]
             // alert(res.data.message);
-          } else {
-            this.msg="注册成功，正在重定向到登录页面！"
-            setTimeout(router.push("/"),"1000");
-            
+          }else{
+            window.location.replace("uniwebview://sdkThirdLogin?accessToken="+res.data.jwt)
           }
+          // router.push("/")
         })
         .catch(() => {
-          this.msg = "注册失败"
-          // alert("注册失败");
+          this.msg = "登录失败"
         });
     },
     gohome() {
